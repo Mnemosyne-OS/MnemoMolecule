@@ -99,9 +99,9 @@ to this repository and is read straight off your disk.
 - **It reads your memory, and it writes only its own.** The cartridge asks for
   `vault:read` and `vault:write`. The write permission exists for one thing:
   saving a revision run into the cartridge's own sandbox vault, on your gesture.
-  It never writes to your other vaults — a sandbox vault is a store the
-  cartridge owns, and making anything in it permanent is a decision you make in
-  the shell, not one the cartridge can take.
+  It never writes to your other vaults. A sandbox vault is a store the cartridge
+  owns, and making anything in it permanent is a decision you make in the shell,
+  not one the cartridge can take.
 - **Asking your memory costs an inference.** The memory panel runs a model over
   your own vaults, so on a cloud route it is billed. It is a button you press,
   never a panel that fills itself.

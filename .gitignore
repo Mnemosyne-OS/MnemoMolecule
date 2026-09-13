@@ -1,0 +1,4 @@
+# The 59 MB ChEBI archive the corpus builder downloads once. Rebuildable from
+# the URL in scripts/build-corpus.mjs; it has no business in git history.
+.corpus-cache/
+node_modules/

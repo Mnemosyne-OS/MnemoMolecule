@@ -1,0 +1,605 @@
+{
+  "_comment": "The editorial list of ChEBI entries. One line of justification per entry, per docs/architecture/115 section 4.5. Ids were RESOLVED against the real 3-star name index, never typed from memory, so no id here is invented. `alias` is OUR common name for a compound ChEBI files under a systematic one; it is shown BESIDE the ChEBI name, never instead of it. `family` groups entries into quiz levels; distractors come from the same family.",
+  "entries": [
+    {
+      "id": "CHEBI:15428",
+      "family": "aminoacid",
+      "why": "The smallest amino acid, and the only achiral one."
+    },
+    {
+      "id": "CHEBI:16977",
+      "family": "aminoacid",
+      "why": "The reference small hydrophobic side chain."
+    },
+    {
+      "id": "CHEBI:16414",
+      "family": "aminoacid",
+      "why": "Branched-chain; the residue whose substitution for Glu6 causes sickle-cell disease."
+    },
+    {
+      "id": "CHEBI:15603",
+      "family": "aminoacid",
+      "why": "Branched-chain, the most abundant residue in proteins."
+    },
+    {
+      "id": "CHEBI:17191",
+      "family": "aminoacid",
+      "why": "Branched-chain, and the one with two stereocentres."
+    },
+    {
+      "id": "CHEBI:17203",
+      "family": "aminoacid",
+      "why": "The imino acid that breaks helices and makes collagen possible."
+    },
+    {
+      "id": "CHEBI:17295",
+      "family": "aminoacid",
+      "why": "Aromatic; the residue phenylketonuria cannot process."
+    },
+    {
+      "id": "CHEBI:17895",
+      "family": "aminoacid",
+      "why": "Aromatic and phosphorylatable: the target of every receptor tyrosine kinase."
+    },
+    {
+      "id": "CHEBI:16828",
+      "family": "aminoacid",
+      "why": "The largest residue and the one that carries protein absorbance at 280 nm."
+    },
+    {
+      "id": "CHEBI:17115",
+      "family": "aminoacid",
+      "why": "The nucleophile of the serine-protease catalytic triad."
+    },
+    {
+      "id": "CHEBI:16857",
+      "family": "aminoacid",
+      "why": "Hydroxyl side chain with a second stereocentre; a phosphorylation site."
+    },
+    {
+      "id": "CHEBI:17561",
+      "family": "aminoacid",
+      "why": "The residue that forms disulfide bridges."
+    },
+    {
+      "id": "CHEBI:16643",
+      "family": "aminoacid",
+      "why": "The initiator residue of every eukaryotic translation."
+    },
+    {
+      "id": "CHEBI:17196",
+      "family": "aminoacid",
+      "why": "The N-linked glycosylation site."
+    },
+    {
+      "id": "CHEBI:18050",
+      "family": "aminoacid",
+      "why": "The main nitrogen carrier in blood."
+    },
+    {
+      "id": "CHEBI:17053",
+      "family": "aminoacid",
+      "why": "Acidic; the second member of the catalytic triad."
+    },
+    {
+      "id": "CHEBI:16015",
+      "family": "aminoacid",
+      "why": "Acidic, and the principal excitatory neurotransmitter."
+    },
+    {
+      "id": "CHEBI:18019",
+      "family": "aminoacid",
+      "why": "Basic; the residue whose acetylation writes the histone code."
+    },
+    {
+      "id": "CHEBI:16467",
+      "family": "aminoacid",
+      "why": "The most basic residue, and the substrate of nitric oxide synthase."
+    },
+    {
+      "id": "CHEBI:15971",
+      "family": "aminoacid",
+      "why": "The only side chain that titrates at physiological pH."
+    },
+    {
+      "id": "CHEBI:15422",
+      "family": "cofactor",
+      "why": "The energy currency of the cell."
+    },
+    {
+      "id": "CHEBI:16761",
+      "family": "cofactor",
+      "why": "The other half of that currency."
+    },
+    {
+      "id": "CHEBI:16027",
+      "family": "cofactor",
+      "why": "The nucleotide the energy charge is measured against.",
+      "alias": "AMP"
+    },
+    {
+      "id": "CHEBI:15846",
+      "family": "cofactor",
+      "why": "The oxidised hydride acceptor of catabolism."
+    },
+    {
+      "id": "CHEBI:16908",
+      "family": "cofactor",
+      "why": "Its reduced form: the electrons the respiratory chain consumes."
+    },
+    {
+      "id": "CHEBI:18009",
+      "family": "cofactor",
+      "why": "The anabolic sibling, kept in a separate redox pool."
+    },
+    {
+      "id": "CHEBI:16238",
+      "family": "cofactor",
+      "why": "The two-electron flavin cofactor of succinate dehydrogenase."
+    },
+    {
+      "id": "CHEBI:17621",
+      "family": "cofactor",
+      "why": "The one-flavin cofactor of complex I."
+    },
+    {
+      "id": "CHEBI:15346",
+      "family": "cofactor",
+      "why": "The universal acyl carrier."
+    },
+    {
+      "id": "CHEBI:15351",
+      "family": "cofactor",
+      "why": "The junction of every catabolic pathway."
+    },
+    {
+      "id": "CHEBI:26355",
+      "family": "cofactor",
+      "why": "The iron porphyrin of haemoglobin, myoglobin and the cytochromes."
+    },
+    {
+      "id": "CHEBI:18230",
+      "family": "cofactor",
+      "why": "The magnesium porphyrin that starts photosynthesis."
+    },
+    {
+      "id": "CHEBI:18405",
+      "family": "cofactor",
+      "why": "The cofactor of essentially all amino-acid transaminations."
+    },
+    {
+      "id": "CHEBI:9532",
+      "family": "cofactor",
+      "why": "The cofactor of pyruvate dehydrogenase."
+    },
+    {
+      "id": "CHEBI:15956",
+      "family": "cofactor",
+      "why": "The carboxyl carrier, and half of the tightest binding pair in biotech."
+    },
+    {
+      "id": "CHEBI:15414",
+      "family": "cofactor",
+      "why": "The universal methyl donor."
+    },
+    {
+      "id": "CHEBI:46245",
+      "family": "cofactor",
+      "why": "Coenzyme Q, the mobile electron carrier of the inner membrane.",
+      "alias": "ubiquinone-10 / coenzyme Q10"
+    },
+    {
+      "id": "CHEBI:15035",
+      "family": "cofactor",
+      "why": "The chromophore of rhodopsin: vision, as a molecule."
+    },
+    {
+      "id": "CHEBI:4167",
+      "family": "sugar",
+      "why": "Blood sugar, in the ring form it actually adopts."
+    },
+    {
+      "id": "CHEBI:15903",
+      "family": "sugar",
+      "why": "The anomer that polymerises into cellulose."
+    },
+    {
+      "id": "CHEBI:17925",
+      "family": "sugar",
+      "why": "The anomer that polymerises into starch and glycogen."
+    },
+    {
+      "id": "CHEBI:28645",
+      "family": "sugar",
+      "why": "The ketose of the fruit sugar, and of sucrose.",
+      "alias": "D-fructose"
+    },
+    {
+      "id": "CHEBI:27667",
+      "family": "sugar",
+      "why": "The epimer whose metabolism fails in galactosaemia.",
+      "alias": "D-galactose"
+    },
+    {
+      "id": "CHEBI:47002",
+      "family": "sugar",
+      "why": "The pentose of RNA and of every nucleotide cofactor.",
+      "alias": "D-ribose"
+    },
+    {
+      "id": "CHEBI:28816",
+      "family": "sugar",
+      "why": "The pentose that makes DNA chemically stable."
+    },
+    {
+      "id": "CHEBI:17992",
+      "family": "sugar",
+      "why": "Table sugar: the glucose-fructose disaccharide."
+    },
+    {
+      "id": "CHEBI:17716",
+      "family": "sugar",
+      "why": "Milk sugar, and the reason lactase persistence is a famous allele."
+    },
+    {
+      "id": "CHEBI:17306",
+      "family": "sugar",
+      "why": "The disaccharide starch digestion produces."
+    },
+    {
+      "id": "CHEBI:28729",
+      "family": "sugar",
+      "why": "The sugar of high-mannose N-glycans.",
+      "alias": "D-mannose"
+    },
+    {
+      "id": "CHEBI:506227",
+      "family": "sugar",
+      "why": "The unit of chitin and of the peptidoglycan backbone."
+    },
+    {
+      "id": "CHEBI:16708",
+      "family": "nucleobase",
+      "why": "Purine; pairs with thymine through two hydrogen bonds."
+    },
+    {
+      "id": "CHEBI:16235",
+      "family": "nucleobase",
+      "why": "Purine; pairs with cytosine through three."
+    },
+    {
+      "id": "CHEBI:16040",
+      "family": "nucleobase",
+      "why": "Pyrimidine, and the base whose methylation carries epigenetic marks."
+    },
+    {
+      "id": "CHEBI:17821",
+      "family": "nucleobase",
+      "why": "The pyrimidine DNA uses instead of uracil."
+    },
+    {
+      "id": "CHEBI:17568",
+      "family": "nucleobase",
+      "why": "The pyrimidine RNA uses instead of thymine."
+    },
+    {
+      "id": "CHEBI:16335",
+      "family": "nucleobase",
+      "why": "The nucleoside, and a signalling molecule in its own right."
+    },
+    {
+      "id": "CHEBI:16750",
+      "family": "nucleobase",
+      "why": "The nucleoside behind GTP and the G protein switch."
+    },
+    {
+      "id": "CHEBI:17562",
+      "family": "nucleobase",
+      "why": "The pyrimidine nucleoside of CTP and CDP-lipids."
+    },
+    {
+      "id": "CHEBI:16704",
+      "family": "nucleobase",
+      "why": "The nucleoside of UTP and of UDP-glucose."
+    },
+    {
+      "id": "CHEBI:17748",
+      "family": "nucleobase",
+      "why": "The deoxynucleoside used to label replicating DNA."
+    },
+    {
+      "id": "CHEBI:15996",
+      "family": "nucleobase",
+      "why": "The nucleotide that powers translation and every G protein."
+    },
+    {
+      "id": "CHEBI:17489",
+      "family": "nucleobase",
+      "why": "The second messenger that made the term necessary.",
+      "alias": "cyclic AMP"
+    },
+    {
+      "id": "CHEBI:16113",
+      "family": "lipid",
+      "why": "The sterol of every animal membrane, and of every steroid hormone."
+    },
+    {
+      "id": "CHEBI:15756",
+      "family": "lipid",
+      "why": "The commonest saturated fatty acid, and the product of fatty-acid synthase.",
+      "alias": "palmitic acid"
+    },
+    {
+      "id": "CHEBI:16196",
+      "family": "lipid",
+      "why": "The commonest monounsaturated fatty acid."
+    },
+    {
+      "id": "CHEBI:17351",
+      "family": "lipid",
+      "why": "An essential fatty acid: the body cannot make it."
+    },
+    {
+      "id": "CHEBI:15843",
+      "family": "lipid",
+      "why": "The precursor of prostaglandins, and the substrate aspirin blocks."
+    },
+    {
+      "id": "CHEBI:17754",
+      "family": "lipid",
+      "why": "The backbone of every triglyceride and phospholipid."
+    },
+    {
+      "id": "CHEBI:16393",
+      "family": "lipid",
+      "why": "The backbone of sphingolipids and the myelin sheath."
+    },
+    {
+      "id": "CHEBI:28918",
+      "family": "messenger",
+      "why": "The fight-or-flight catecholamine.",
+      "alias": "adrenaline"
+    },
+    {
+      "id": "CHEBI:33569",
+      "family": "messenger",
+      "why": "The sympathetic neurotransmitter and its close relative."
+    },
+    {
+      "id": "CHEBI:18243",
+      "family": "messenger",
+      "why": "The catecholamine of reward, and of Parkinson disease."
+    },
+    {
+      "id": "CHEBI:28790",
+      "family": "messenger",
+      "why": "The monoamine SSRIs act on."
+    },
+    {
+      "id": "CHEBI:15355",
+      "family": "messenger",
+      "why": "The neuromuscular junction transmitter."
+    },
+    {
+      "id": "CHEBI:18295",
+      "family": "messenger",
+      "why": "The mediator of allergy and gastric acid secretion."
+    },
+    {
+      "id": "CHEBI:16865",
+      "family": "messenger",
+      "why": "The principal inhibitory neurotransmitter."
+    },
+    {
+      "id": "CHEBI:17750",
+      "family": "messenger",
+      "why": "An osmolyte and methyl donor, kept as a contrast to glycine itself."
+    },
+    {
+      "id": "CHEBI:16796",
+      "family": "messenger",
+      "why": "The hormone of the circadian phase."
+    },
+    {
+      "id": "CHEBI:16480",
+      "family": "messenger",
+      "why": "The gas that acts as a signal, and the reason NO synthase exists."
+    },
+    {
+      "id": "CHEBI:17347",
+      "family": "messenger",
+      "why": "The principal androgen."
+    },
+    {
+      "id": "CHEBI:23965",
+      "family": "messenger",
+      "why": "The principal oestrogen, and the ligand of 3ERT."
+    },
+    {
+      "id": "CHEBI:17650",
+      "family": "messenger",
+      "why": "The glucocorticoid of the stress axis."
+    },
+    {
+      "id": "CHEBI:17026",
+      "family": "messenger",
+      "why": "The steroid of the luteal phase and of pregnancy."
+    },
+    {
+      "id": "CHEBI:30660",
+      "family": "messenger",
+      "why": "The iodinated hormone that sets basal metabolic rate."
+    },
+    {
+      "id": "CHEBI:27584",
+      "family": "messenger",
+      "why": "The mineralocorticoid that controls sodium retention."
+    },
+    {
+      "id": "CHEBI:15365",
+      "family": "drug",
+      "why": "Irreversible COX inhibitor: the drug seen bound in 1PTH.",
+      "alias": "aspirin"
+    },
+    {
+      "id": "CHEBI:46195",
+      "family": "drug",
+      "why": "The analgesic whose mechanism is still argued about."
+    },
+    {
+      "id": "CHEBI:5855",
+      "family": "drug",
+      "why": "The reversible NSAID taught beside aspirin."
+    },
+    {
+      "id": "CHEBI:27732",
+      "family": "drug",
+      "why": "Adenosine receptor antagonist; the most consumed psychoactive compound."
+    },
+    {
+      "id": "CHEBI:17303",
+      "family": "drug",
+      "why": "The opioid agonist that named the receptor."
+    },
+    {
+      "id": "CHEBI:18208",
+      "family": "drug",
+      "why": "The beta-lactam that started antibiotics.",
+      "alias": "penicillin G"
+    },
+    {
+      "id": "CHEBI:2676",
+      "family": "drug",
+      "why": "The aminopenicillin actually prescribed today."
+    },
+    {
+      "id": "CHEBI:45783",
+      "family": "drug",
+      "why": "The first targeted kinase inhibitor; seen bound in 1IEP."
+    },
+    {
+      "id": "CHEBI:7798",
+      "family": "drug",
+      "why": "The neuraminidase inhibitor of 2QWE."
+    },
+    {
+      "id": "CHEBI:44185",
+      "family": "drug",
+      "why": "The antifolate of 1DHF."
+    },
+    {
+      "id": "CHEBI:41774",
+      "family": "drug",
+      "why": "The selective oestrogen receptor modulator of 3ERT."
+    },
+    {
+      "id": "CHEBI:53289",
+      "family": "drug",
+      "why": "The acetylcholinesterase inhibitor of 1EVE."
+    },
+    {
+      "id": "CHEBI:63621",
+      "family": "drug",
+      "why": "The HIV protease inhibitor of 1HXB."
+    },
+    {
+      "id": "CHEBI:39548",
+      "family": "drug",
+      "why": "The statin, and the largest-selling drug in history."
+    },
+    {
+      "id": "CHEBI:6801",
+      "family": "drug",
+      "why": "First-line therapy in type 2 diabetes."
+    },
+    {
+      "id": "CHEBI:87738",
+      "family": "drug",
+      "why": "The vitamin K antagonist, and a pharmacogenetics classic.",
+      "alias": "warfarin"
+    },
+    {
+      "id": "CHEBI:100241",
+      "family": "drug",
+      "why": "The fluoroquinolone that targets DNA gyrase."
+    },
+    {
+      "id": "CHEBI:28748",
+      "family": "drug",
+      "why": "The DNA intercalator of many chemotherapy regimens."
+    },
+    {
+      "id": "CHEBI:45863",
+      "family": "drug",
+      "why": "The microtubule stabiliser: the ligand side of 1TUB."
+    },
+    {
+      "id": "CHEBI:23359",
+      "family": "drug",
+      "why": "The microtubule destabiliser, and the gout drug."
+    },
+    {
+      "id": "CHEBI:15377",
+      "family": "small",
+      "why": "The solvent, and the molecule every structure is full of."
+    },
+    {
+      "id": "CHEBI:16199",
+      "family": "small",
+      "why": "The nitrogen waste product, and the classic denaturant."
+    },
+    {
+      "id": "CHEBI:16236",
+      "family": "small",
+      "why": "The alcohol, and the substrate of alcohol dehydrogenase."
+    },
+    {
+      "id": "CHEBI:29073",
+      "family": "small",
+      "why": "Vitamin C, the cofactor of collagen prolyl hydroxylase."
+    },
+    {
+      "id": "CHEBI:15379",
+      "family": "small",
+      "why": "What haemoglobin carries."
+    },
+    {
+      "id": "CHEBI:16526",
+      "family": "small",
+      "why": "What carbonic anhydrase hydrates."
+    },
+    {
+      "id": "CHEBI:17544",
+      "family": "small",
+      "why": "The buffer of blood pH."
+    },
+    {
+      "id": "CHEBI:422",
+      "family": "small",
+      "why": "The end product of anaerobic glycolysis.",
+      "alias": "L-lactic acid"
+    },
+    {
+      "id": "CHEBI:15361",
+      "family": "small",
+      "why": "The junction between glycolysis and the TCA cycle."
+    },
+    {
+      "id": "CHEBI:30769",
+      "family": "small",
+      "why": "The first intermediate of the cycle named after it.",
+      "alias": "citrate"
+    },
+    {
+      "id": "CHEBI:17775",
+      "family": "small",
+      "why": "The purine end product that crystallises in gout.",
+      "alias": "uric acid"
+    },
+    {
+      "id": "CHEBI:16919",
+      "family": "small",
+      "why": "The phosphagen buffer of muscle ATP."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#f3f4f4" />
+    <meta
+      name="description"
+      content="An offline explorer of molecular structures, wired to your own memory. Turn a protein in 3D, read the experiment behind it, and ask what your own notes already say about it."
+    />
+    <title>Molecule</title>
+    <link rel="icon" href="./favicon.svg" />
+    <script type="module" crossorigin src="./assets/index-DkaEcQNZ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DRet0zfG.css">
+  </head>
+  <body>
+    <!--
+      #root is NOT empty on purpose. Copied from Atlas, for the same reason.
+
+      A cartridge is an iframe. When its module script fails to load or throws
+      before React mounts, the frame is a white rectangle: no error reaches the
+      host's log ring (that only carries the MAIN renderer), and the host cannot
+      see inside a sandboxed frame either. White is the least informative
+      failure this shell can produce, and it is the one it produces by default.
+
+      So the page ships with something already in it, and a listener that turns
+      whatever went wrong into text on that same rectangle. React replaces all
+      of it on its first paint, so a healthy boot never shows it.
+    -->
+    <div id="root">
+      <div id="boot-report" style="font:13px/1.6 system-ui,sans-serif;color:#3c4956;padding:22px;max-width:760px">
+        <strong style="font-weight:600">Molecule is starting…</strong>
+        <div id="boot-where" style="color:#78838f;margin-top:6px;word-break:break-all"></div>
+        <pre id="boot-what" style="white-space:pre-wrap;color:#a2554c;margin:14px 0 0"></pre>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var where = document.getElementById('boot-where');
+        var what = document.getElementById('boot-what');
+        if (where) where.textContent = 'served from ' + document.baseURI;
+        function say(line) { if (what) what.textContent += line + '\n'; }
+
+        window.addEventListener('error', function (e) {
+          // A failed <script>/<link> raises an error event on the ELEMENT with
+          // no message — that is the case that matters here, and the one a
+          // naive handler prints as "undefined".
+          if (e.target && e.target !== window && e.target.src !== undefined) {
+            say('could not load: ' + (e.target.src || e.target.href));
+          } else {
+            say((e.message || 'script error') + (e.filename ? '  @ ' + e.filename + ':' + e.lineno : ''));
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function (e) {
+          var r = e.reason;
+          say('rejected: ' + ((r && r.message) || r));
+        });
+
+        // Nothing reported and nothing rendered is its own diagnosis: the
+        // module never ran at all. Probe the bundle so the reason is named.
+        setTimeout(function () {
+          if (!document.getElementById('boot-report')) return; // React mounted
+          say('the app did not mount after 8s.');
+          var s = document.querySelector('script[type=module]');
+          var url = s && s.src;
+          if (!url) return say('no module script tag in the document.');
+          fetch(url)
+            .then(function (r) {
+              say('bundle ' + r.status + ' ' + (r.headers.get('content-type') || '(no content-type)'));
+            })
+            .catch(function (err) { say('bundle unreachable: ' + err.message); });
+        }, 8000);
+      })();
+    </script>
+  </body>
+</html>

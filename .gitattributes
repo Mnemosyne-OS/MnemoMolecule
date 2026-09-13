@@ -1,0 +1,16 @@
+# Text is stored LF and checked out however the contributor's platform wants it.
+* text=auto eol=lf
+
+# The corpus ships 210 gzipped structures. Git detects that on its own; this
+# says so out loud anyway, because a line-ending normalisation applied to a .gz
+# does not fail — it produces a file that decompresses to nothing, on the
+# contributor's machine only.
+*.gz     binary
+*.png    binary
+*.jpg    binary
+*.woff2  binary
+
+# Structure files are text and must stay LF: 3Dmol parses them line by line, and
+# a CRLF checkout is the kind of difference that shows up as one platform's
+# parser silently reading a trailing character into a field.
+*.sdf    text eol=lf

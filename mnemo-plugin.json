@@ -1,0 +1,48 @@
+{
+  "name": "@mnemosyne-plugins/mnemo-molecule",
+  "displayName": "Molecule",
+  "version": "0.1.0",
+  "category": "Research",
+  "vendor": "Mnemosyne Labs",
+  "license": "MIT",
+  "description": "An offline explorer of molecular structures, wired to your own memory. Turn a protein in 3D, read the experiment behind it — method, resolution, year — and ask what your own notes already say about it. Every structure carries a stable identifier (PDB, UniProt, ChEBI, InChIKey), so a question asked in any language reaches the same molecule. Then let it quiz you: it hides a structure's name, asks which one it is, and remembers when to ask again.",
+  "descriptionI18n": {
+    "en": "An offline explorer of molecular structures, wired to your own memory. Turn a protein in 3D, read the experiment behind it — method, resolution, year — and ask what your own notes already say about it. Every structure carries a stable identifier (PDB, UniProt, ChEBI, InChIKey), so a question asked in any language reaches the same molecule. Then let it quiz you: it hides a structure's name, asks which one it is, and remembers when to ask again.",
+    "fr": "Un explorateur hors ligne de structures moléculaires, branché sur votre propre mémoire. Tournez une protéine en 3D, lisez l'expérience qui la produit — méthode, résolution, année — et demandez ce que vos propres notes en disent déjà. Chaque structure porte un identifiant stable (PDB, UniProt, ChEBI, InChIKey), donc une question posée dans n'importe quelle langue atteint la même molécule. Puis laissez-le vous interroger : il masque le nom d'une structure, demande laquelle c'est, et retient quand vous reposer la question.",
+    "es": "Un explorador sin conexión de estructuras moleculares, conectado a tu propia memoria. Gira una proteína en 3D, lee el experimento que la produjo — método, resolución, año — y pregunta qué dicen ya tus propias notas sobre ella. Cada estructura lleva un identificador estable (PDB, UniProt, ChEBI, InChIKey), así que una pregunta hecha en cualquier idioma llega a la misma molécula. Luego deja que te examine: oculta el nombre de una estructura, pregunta cuál es, y recuerda cuándo volver a preguntártelo."
+  },
+  "keywords": [
+    "3d",
+    "biochemistry",
+    "chebi",
+    "chemistry",
+    "education",
+    "flashcards",
+    "molecular-biology",
+    "pdb",
+    "pharmacy",
+    "protein",
+    "quiz",
+    "revision",
+    "spaced-repetition",
+    "study"
+  ],
+  "permissions": [
+    "vault:read",
+    "vault:write"
+  ],
+  "updateStrategy": "git",
+  "entrypoints": {
+    "renderer": "index.html"
+  },
+  "widgets": [
+    {
+      "id": "mnemo-molecule-main",
+      "icon": "🧬",
+      "name": "Molecule",
+      "route": "index.html",
+      "defaultWidth": 1180,
+      "defaultHeight": 840
+    }
+  ]
+}

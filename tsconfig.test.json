@@ -1,0 +1,16 @@
+{
+  /* The tests, typechecked.
+   *
+   * 🚨 `tsconfig.json` EXCLUDES them on purpose — shipping must not depend on
+   * the test runner being installed — and the consequence is that nothing was
+   * checking them at all. Vitest transpiles per file without typechecking, so
+   * a fixture kept describing a `format` field for hours after the field was
+   * removed from the type, and the whole suite stayed green. Found by a review
+   * pass, not by the suite.
+   *
+   * `pnpm typecheck` runs BOTH. The shipping build still runs only the first.
+   */
+  "extends": "./tsconfig.json",
+  "include": ["src"],
+  "exclude": []
+}

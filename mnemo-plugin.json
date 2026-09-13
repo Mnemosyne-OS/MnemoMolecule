@@ -32,6 +32,7 @@
     "vault:write"
   ],
   "updateStrategy": "git",
+  "repository": "https://github.com/Mnemosyne-OS/MnemoMolecule",
   "entrypoints": {
     "renderer": "index.html"
   },

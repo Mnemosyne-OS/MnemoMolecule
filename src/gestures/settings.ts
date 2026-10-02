@@ -12,9 +12,12 @@ import { SPEED_KEYS, type SpeedKey } from './config';
 
 export type Speeds = Record<SpeedKey, number>;
 
+/** Slowest and fastest a gesture can be set: below 0.25× a hand barely moves the view. */
 export const SPEED_MIN = 0.25;
 export const SPEED_MAX = 3;
+/** The slider's step, so a chosen speed reads as a round number. */
 export const SPEED_STEP = 0.25;
+/** The key the speeds live under in the cartridge's durable state. */
 export const SETTINGS_KEY = 'gestures';
 
 const defaults = (): Speeds => Object.fromEntries(SPEED_KEYS.map((k) => [k, 1])) as Speeds;

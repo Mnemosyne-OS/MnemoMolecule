@@ -2,9 +2,10 @@
  * GesturePanel — which hand gestures this cartridge takes, whether the host
  * granted them, and how fast each one moves the view (doc 106 §32).
  *
- * It receives its words already translated: the gesture lines are the
- * host's own descriptions (shell locale `gestures.hud.app.*`), so this panel
- * and the shell's cheat-sheet name the same pose the same way.
+ * It receives its words already translated. The gesture lines are the
+ * cartridge's own strings, written to match the host's cheat-sheet
+ * (`gestures.hud.app.*`, which an iframe cannot read): when the host renames
+ * a pose, these lines have to follow by hand.
  */
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import {
@@ -40,7 +41,10 @@ interface Props {
 
 const times = (n: number) => `${Number.isInteger(n) ? n : n.toFixed(2).replace(/0$/, '')}×`;
 
-/** Loads the stored speeds as soon as the cartridge mounts it, open or not. */
+/**
+ * The gesture panel. Mounted closed with the page, so the stored speeds are
+ * read at start and the hand moves at the chosen speed before anyone opens it.
+ */
 export function GesturePanel({ open, onClose, words, speedRows, appRows, osRows }: Props) {
   const speeds = useSyncExternalStore(subscribeSpeeds, getSpeeds);
   const save = useSyncExternalStore(subscribeSpeeds, getSaveState);

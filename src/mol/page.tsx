@@ -20,6 +20,7 @@ import { defaultStyleFor, kindCanCartoon, STYLES, type Style } from './styles';
 import { MoleculeMemory } from '../mnemo/MoleculeMemory';
 import { useI18n } from '../i18n/useI18n';
 import type { Key } from '../i18n/strings';
+import { GesturePanel } from '../gestures/GesturePanel';
 
 // The quiz is a whole second screen and most opens never reach it. Splitting it
 // keeps the first paint to the viewer and the list.
@@ -40,6 +41,7 @@ export function Page() {
   const [style, setStyle] = useState<Style>('cartoon');
   const [spinning, setSpinning] = useState(false);
   const [recentre, setRecentre] = useState(0);
+  const [gestOpen, setGestOpen] = useState(false);
   const [reviewing, setReviewing] = useState(false);
   // 🚨 A run must not be able to read its own answer off the screen. The
   // identity card NAMES the structure and the library HIGHLIGHTS it, so while
@@ -188,12 +190,27 @@ export function Page() {
           <button type="button" className="chip" disabled={!selected} onClick={() => setRecentre((n) => n + 1)}>
             {t('view.reset')}
           </button>
+          <button
+            type="button"
+            className="chip"
+            onClick={() => setGestOpen(true)}
+            aria-label={t('gest.open')}
+            title={t('gest.open')}
+          >
+            ✋
+          </button>
           <span className="spacer" />
           {!reviewing && (
             <button type="button" className="btn" onClick={() => setReviewing(true)}>{t('review.open')}</button>
           )}
         </div>
-        <Viewer entry={selected} style={style} spinning={spinning} recentre={recentre} />
+        <Viewer
+          entry={selected}
+          style={style}
+          spinning={spinning}
+          recentre={recentre}
+          onSpinToggle={() => { if (selected) setSpinning((v) => !v); }}
+        />
         {!selected && <p className="note pad">{t('lib.empty')}</p>}
       </section>
 
@@ -207,6 +224,30 @@ export function Page() {
           <p className="note pad">{t('lib.empty')}</p>
         )}
       </aside>
+
+      <GesturePanel
+        open={gestOpen}
+        onClose={() => setGestOpen(false)}
+        words={{
+          title: t('gest.title'), lead: t('gest.lead'), asking: t('gest.asking'), granted: t('gest.granted'),
+          refused: (why) => t('gest.refused', { why }), speeds: t('gest.speeds'), reset: t('gest.reset'),
+          loading: t('gest.loading'), unsaved: (why) => t('gest.unsaved', { why }),
+          inApp: t('gest.inApp'), os: t('gest.os'), close: t('gest.close'),
+        }}
+        speedRows={[{ key: 'turn', label: t('gest.speed.turn') }, { key: 'zoom', label: t('gest.speed.zoom') }]}
+        appRows={[
+          { icon: '🔄', text: t('gest.orbit') },
+          { icon: '↕️', text: t('gest.depth') },
+          { icon: '🤏🤏', text: t('gest.zoom') },
+          { icon: '✋✋', text: t('gest.recenter') },
+          { icon: '✋', text: t('gest.action') },
+        ]}
+        osRows={[
+          { icon: '🖐️', text: t('gest.osFull') },
+          { icon: '✊', text: t('gest.osClose') },
+          { icon: '🤏', text: t('gest.osWindow') },
+        ]}
+      />
 
       {reviewing && (
         <Suspense fallback={null}>

@@ -36,6 +36,10 @@ import * as $3Dmol from '3dmol';
 import { loadStructure, parserFor, type Entry } from './corpus';
 import { isSlowToDraw, styleSpec, type Style } from './styles';
 import { useI18n } from '../i18n/useI18n';
+import { listenToGestures } from '../gestures/listen';
+import { getSpeeds } from '../gestures/settings';
+import { dragDegrees, zoomFactor } from '../gestures/moves';
+import { SPIN_ACTION } from '../gestures/config';
 
 /**
  * How long the load waits for a paint before giving up and drawing anyway.
@@ -56,14 +60,18 @@ interface Props {
   spinning: boolean;
   /** Bumped by the recentre button; the value itself is never read. */
   recentre: number;
+  /** The taught « Spin » pose (doc 106 §32): toggles the spin like its button. */
+  onSpinToggle?: () => void;
 }
 
-export function Viewer({ entry, style, spinning, recentre }: Props) {
+export function Viewer({ entry, style, spinning, recentre, onSpinToggle }: Props) {
   const host = useRef<HTMLDivElement | null>(null);
   const viewer = useRef<ReturnType<typeof $3Dmol.createViewer> | null>(null);
   const token = useRef(0);
   const [phase, setPhase] = useState<Phase>({ kind: 'idle' });
   const { t } = useI18n();
+  const spinToggle = useRef(onSpinToggle);
+  spinToggle.current = onSpinToggle;
 
   // One WebGL context for the life of the panel.
   useEffect(() => {
@@ -79,7 +87,36 @@ export function Viewer({ entry, style, spinning, recentre }: Props) {
       console.warn('[molecule] the 3D view could not start:', why);
       setPhase({ kind: 'failed', why });
     }
+    // The hand (doc 106 §32): the host sends these only while Molecule is
+    // the full-screen window. Each is what a mouse drag or a wheel would do,
+    // at the speed the person chose in the gesture panel.
+    const stopGestures = listenToGestures({
+      orbit: ({ dx, dy }) => {
+        const cur = viewer.current;
+        const h = host.current?.clientHeight ?? 0;
+        if (!cur) return;
+        const k = getSpeeds().turn;
+        const turnY = dragDegrees(dx, h, k);
+        const turnX = dragDegrees(dy, h, k);
+        if (turnY === null || turnX === null) return;
+        cur.rotate(turnY, 'y');
+        cur.rotate(turnX, 'x');
+        cur.render();
+      },
+      depth: ({ factor }) => zoomBy(factor),
+      zoom: ({ factor }) => zoomBy(factor),
+      recenter: () => { const cur = viewer.current; if (!cur) return; cur.zoomTo(); cur.render(); },
+      action: ({ id }) => { if (id === SPIN_ACTION) spinToggle.current?.(); },
+    });
+    const zoomBy = (factor: number) => {
+      const cur = viewer.current;
+      const f = zoomFactor(factor, getSpeeds().zoom);
+      if (!cur || f === null) return;
+      cur.zoom(f);
+      cur.render();
+    };
     return () => {
+      stopGestures();
       // Rule 13/14: the context goes back when the panel does, or a few opens
       // and closes exhaust what the browser will grant.
       token.current += 1;

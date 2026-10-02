@@ -28,6 +28,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MnemoCartridgeSDK } from '@mnemosyne_os/cartridge-sdk';
+import { writeKey } from '../gestures/store';
 import type { Corpus, Entry } from '../mol/corpus';
 import {
   emptyState, grade, nextQuestion, parseState, progress, sessionNote, stateSize, STUDY_SPINE,
@@ -140,7 +141,9 @@ export function ReviewPanel({ corpus, onShow, onStudyingChange, onClose }: Props
   const write = (next: ReviewState) => {
     if (store.kind === 'unsaved') { setStore({ ...store, state: next }); return; }
     setStore({ kind: 'ready', state: next });
-    sdk.invoke('state.set', { state: { [KEY]: next } }).catch((err: unknown) => {
+    // Merged, never sent alone: the host replaces the whole blob, and the
+    // gesture speeds live in it too (gestures/store).
+    writeKey(KEY, next).catch((err: unknown) => {
       const msg = err instanceof Error ? err.message : String(err);
       console.warn('[molecule] review state not saved:', msg);
       if (alive.current) setStore({ kind: 'unsaved', state: next, why: t('review.notSaved') });

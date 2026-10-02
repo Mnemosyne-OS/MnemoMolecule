@@ -1,7 +1,7 @@
 {
   "name": "@mnemosyne-plugins/mnemo-molecule",
   "displayName": "Molecule",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "category": "Research",
   "vendor": "Mnemosyne Labs",
   "license": "MIT",
@@ -29,10 +29,33 @@
   ],
   "permissions": [
     "vault:read",
-    "vault:write"
+    "vault:write",
+    "gesture:receive"
   ],
-  "updateStrategy": "git",
+  "gestures": {
+    "takes": [
+      "orbit",
+      "depth",
+      "zoom",
+      "recenter"
+    ],
+    "actions": [
+      {
+        "id": "spin",
+        "label": {
+          "en": "Spin",
+          "fr": "Rotation",
+          "es": "Girar",
+          "de": "Drehen",
+          "pt": "Girar",
+          "ru": "Вращение",
+          "zh": "旋转"
+        }
+      }
+    ]
+  },
   "repository": "https://github.com/Mnemosyne-OS/MnemoMolecule",
+  "updateStrategy": "git",
   "entrypoints": {
     "renderer": "index.html"
   },

@@ -35,6 +35,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { MnemoCartridgeSDK } from '@mnemosyne_os/cartridge-sdk';
 import { displayName, type Entry } from '../mol/corpus';
+import { questionFor } from './memoryQuestion';
 import { useI18n } from '../i18n/useI18n';
 
 // Must match "name" in mnemo-plugin.json — the host keys permissions on it.
@@ -50,36 +51,6 @@ type Phase =
 
 /** The host's own words for "you are not embedded" (cartridge-sdk index.ts). */
 const NO_HOST = 'No Mnemosyne host';
-
-/**
- * Every key a reader's notes might carry for this structure.
- *
- * Exported and pure because it is the part worth pinning in a test: a question
- * that quietly stops carrying the accession still LOOKS like it works, and
- * only misses the notes that were the reason to build this.
- */
-export function keysFor(entry: Entry): string[] {
-  if (entry.kind === 'pdb') {
-    // The experiment first, then the protein. Both, always — one names the
-    // structure on screen and the other names what it is a structure OF.
-    return [`PDB ${entry.id}`, ...entry.uniprot.map((u) => `UniProt ${u}`)];
-  }
-  const out = [entry.id];
-  if (entry.inchikey) out.push(`InChIKey ${entry.inchikey}`);
-  if (entry.formula) out.push(entry.formula);
-  return out;
-}
-
-/** The sentence sent to the host. Pure, for the same reason. */
-export function questionFor(entry: Entry): string {
-  const names = entry.kind === 'chebi' && entry.alias && entry.alias !== entry.name
-    ? `${entry.alias} (also called ${entry.name})`
-    : displayName(entry);
-  return (
-    `What do my own notes say about ${names} — ${keysFor(entry).join(', ')}? ` +
-    'Answer only from my memory. If my memory holds nothing about it, say exactly: NOTHING IN MEMORY.'
-  );
-}
 
 export function MoleculeMemory({ entry }: { entry: Entry | null }) {
   const { t } = useI18n();
@@ -107,7 +78,7 @@ export function MoleculeMemory({ entry }: { entry: Entry | null }) {
       const result = await sdk.query(questionFor(entry));
       if (asked.current !== tokenId) return;
       if (result?.success === false) {
-        setPhase({ kind: 'failed', message: result.error || 'Memory did not answer.' });
+        setPhase({ kind: 'failed', message: result.error || t('memory.noReason') });
         return;
       }
       const text = (result?.text ?? result?.response ?? result?.content ?? result?.answer ?? '').trim();

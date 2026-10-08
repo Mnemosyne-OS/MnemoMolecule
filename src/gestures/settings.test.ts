@@ -5,13 +5,19 @@ const store = vi.hoisted(() => ({
   blob: {} as Record<string, unknown>,
   writes: [] as unknown[],
   read: null as null | (() => Promise<Record<string, unknown>>),
+  failWrites: 0,
 }));
 vi.mock('./store', () => ({
   readStore: () => (store.read ? store.read() : Promise.resolve(store.blob)),
-  writeKey: (k: string, v: unknown) => { store.writes.push(v); store.blob = { ...store.blob, [k]: v }; return Promise.resolve(); },
+  writeKey: (k: string, v: unknown) => {
+    store.writes.push(v);
+    if (store.failWrites > 0) { store.failWrites--; return Promise.reject(new Error('disk full')); }
+    store.blob = { ...store.blob, [k]: v };
+    return Promise.resolve();
+  },
 }));
 
-beforeEach(() => { vi.resetModules(); store.blob = {}; store.writes = []; store.read = null; });
+beforeEach(() => { vi.resetModules(); store.blob = {}; store.writes = []; store.read = null; store.failWrites = 0; });
 const load = () => import('./settings');
 const [first, second] = SPEED_KEYS;
 const ones = () => Object.fromEntries(SPEED_KEYS.map((k) => [k, 1]));
@@ -54,6 +60,35 @@ describe('changing a speed', () => {
     await loading;
     expect(m.getSpeeds()[second]).toBe(2);
     expect(store.writes).toEqual([{ ...ones(), [second]: 2 }]);
+  });
+
+  it('a pointer-up then a blur on the same value writes once', async () => {
+    const m = await load();
+    await m.loadSpeeds();
+    m.setSpeed(first, 2);
+    m.setSpeed(first, 2);
+    expect(store.writes).toHaveLength(1);
+  });
+
+  it('a release that changes nothing writes nothing', async () => {
+    store.blob = { gestures: { [first]: 1.5 } };
+    const m = await load();
+    await m.loadSpeeds();
+    m.setSpeed(first, 1.5);
+    expect(store.writes).toHaveLength(0);
+  });
+
+  it('after a failed write, the next change tries again and clears the warning', async () => {
+    const m = await load();
+    await m.loadSpeeds();
+    store.failWrites = 1;
+    m.setSpeed(first, 2);
+    await Promise.resolve(); await Promise.resolve();
+    expect(m.getSaveState()).toEqual({ kind: 'unsaved', why: 'disk full' });
+    m.setSpeed(first, 2.5);
+    await Promise.resolve(); await Promise.resolve();
+    expect(store.writes).toHaveLength(2);
+    expect(m.getSaveState()).toEqual({ kind: 'ready' });
   });
 
   it('an unreadable store keeps the speed for the session and says it is not saved', async () => {

@@ -54,8 +54,6 @@ export interface LevelProgress {
   studied: number;
   mastered: number;
   due: number;
-  /** 0..1 of the level's structures that have reached the last box. */
-  ratio: number;
 }
 
 /**
@@ -98,9 +96,7 @@ export function levelProgress(level: Level, entries: Entry[], state: ReviewState
     if (c.b >= TOP_BOX) mastered++;
     if (c.d <= today) due++;
   }
-  // A level with no structures has no ratio to report; zero would read as "none
-  // of them mastered", which is a different statement from "empty".
-  return { studied, mastered, due, ratio: ids.length ? mastered / ids.length : 0 };
+  return { studied, mastered, due };
 }
 
 /**

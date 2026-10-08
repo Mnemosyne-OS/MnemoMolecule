@@ -61,21 +61,40 @@ export function loadSpeeds(): Promise<void> {
   loaded ??= readStore().then((data) => {
     save = { kind: 'ready' };
     if (changedWhileLoading) persist();
-    else speeds = parseSpeeds(data[SETTINGS_KEY]);
+    else {
+      speeds = parseSpeeds(data[SETTINGS_KEY]);
+      // Only what the store actually holds counts as written: an absent key
+      // read as defaults has never been saved.
+      lastWritten = data[SETTINGS_KEY] !== undefined ? JSON.stringify(speeds) : null;
+    }
     emit();
   }).catch((err: unknown) => {
     const why = err instanceof Error ? err.message : String(err);
     console.warn('[gestures] settings unavailable:', why);
+    loadFailed = true;
     save = { kind: 'unsaved', why };
     emit();
   });
   return loaded;
 }
 
+/** The speeds last sent to the store: a release that changes nothing (a
+ *  pointer-up then a blur on the same slider) writes nothing. */
+let lastWritten: string | null = null;
+/** The store could not be READ: writing would replace keys we never saw. */
+let loadFailed = false;
+
 function persist(): void {
-  writeKey(SETTINGS_KEY, speeds).catch((err: unknown) => {
+  const snapshot = JSON.stringify(speeds);
+  if (snapshot === lastWritten) return;
+  lastWritten = snapshot;
+  writeKey(SETTINGS_KEY, speeds).then(() => {
+    // A write that works again clears the warning a failed one left.
+    if (save.kind === 'unsaved') { save = { kind: 'ready' }; emit(); }
+  }).catch((err: unknown) => {
     const why = err instanceof Error ? err.message : String(err);
     console.warn('[gestures] settings not saved:', why);
+    lastWritten = null;   // the next change tries again
     save = { kind: 'unsaved', why };
     emit();
   });
@@ -83,7 +102,9 @@ function persist(): void {
 
 function commit(): void {
   if (save.kind === 'loading') { changedWhileLoading = true; return; }
-  if (save.kind === 'ready') persist();
+  // 🚨 After a failed WRITE the next change must try again: gating on
+  // 'ready' left every later choice unsaved for the rest of the session.
+  if (!loadFailed) persist();
 }
 
 /**

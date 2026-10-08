@@ -28,7 +28,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MnemoCartridgeSDK } from '@mnemosyne_os/cartridge-sdk';
-import { writeKey } from '../gestures/store';
+import { readStore, writeKey } from '../gestures/store';
 import type { Corpus, Entry } from '../mol/corpus';
 import {
   emptyState, grade, nextQuestion, parseState, progress, sessionNote, stateSize, STUDY_SPINE,
@@ -118,10 +118,13 @@ export function ReviewPanel({ corpus, onShow, onStudyingChange, onClose }: Props
   // ── the schedule ─────────────────────────────────────────────────────────
   useEffect(() => {
     let cancelled = false;
-    sdk.invoke<Record<string, unknown>>('state.get')
+    // Through the store, never `state.get` directly: the host answers an
+    // envelope `{ state, updatedAt }`, and read as the blob the schedule never
+    // came back after a reload (the fix MnemoCosmos got on 02/10, `c2de5636`).
+    readStore()
       .then((data) => {
         if (cancelled || !alive.current) return;
-        setStore({ kind: 'ready', state: parseState(data?.[KEY]) });
+        setStore({ kind: 'ready', state: parseState(data[KEY]) });
       })
       .catch((err: unknown) => {
         if (cancelled || !alive.current) return;
@@ -139,6 +142,13 @@ export function ReviewPanel({ corpus, onShow, onStudyingChange, onClose }: Props
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const write = (next: ReviewState) => {
+    // 🚨 Before the schedule is READ, `held` is an empty stand-in: writing it
+    // merged {one card} over the stored history and erased it (doc 115 pass,
+    // 05/10; doc 96's rule: a mutation before the first read writes nothing).
+    if (store.kind === 'loading') {
+      console.warn('[molecule] review answer before the schedule was read: not written');
+      return;
+    }
     if (store.kind === 'unsaved') { setStore({ ...store, state: next }); return; }
     setStore({ kind: 'ready', state: next });
     // Merged, never sent alone: the host replaces the whole blob, and the
@@ -279,7 +289,7 @@ export function ReviewPanel({ corpus, onShow, onStudyingChange, onClose }: Props
                   <button
                     type="button"
                     className="level-tile"
-                    disabled={!ok}
+                    disabled={!ok || store.kind === 'loading'}
                     onClick={() => setLevel(lv)}
                   >
                     <span className="level-name">{levelName(lv)}</span>

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { ChebiEntry, PdbEntry } from '../mol/corpus';
-import { keysFor, questionFor } from './MoleculeMemory';
+import { keysFor, questionFor } from './memoryQuestion';
 
 const pdb = (over: Partial<PdbEntry> = {}): PdbEntry => ({
   kind: 'pdb', id: '1HHO', family: 'oxygen', why: '', label: 'Haemoglobin, oxy',

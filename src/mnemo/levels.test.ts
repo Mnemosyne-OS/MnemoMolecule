@@ -22,7 +22,7 @@ const chebi = (id: string, family: string, alias: string | null = null): ChebiEn
 
 const corpusOf = (structures: Entry[]): Corpus => ({
   builtAt: '2026-09-09', counts: { pdb: 0, chebi: 0 },
-  outOf: { pdb: '', chebi: '' }, sources: [], structures,
+  outOf: { pdb: 0, chebi: 0 }, sources: [], structures,
 });
 
 describe('levels are derived from the corpus, never listed by hand', () => {
@@ -105,7 +105,7 @@ describe('progress counts cards, never structures', () => {
 
   it('reports zero studied for a level nobody opened', () => {
     const p = levelProgress(level, entries, { v: 1, cards: {} }, NOW);
-    expect(p).toEqual({ studied: 0, mastered: 0, due: 0, ratio: 0 });
+    expect(p).toEqual({ studied: 0, mastered: 0, due: 0 });
   });
 
   it('counts only cards inside the level', () => {
@@ -117,11 +117,10 @@ describe('progress counts cards, never structures', () => {
     expect(p.studied).toBe(1);
     expect(p.mastered).toBe(1);
     expect(p.due).toBe(1);
-    expect(p.ratio).toBeCloseTo(0.25);
   });
 
-  it('reports a ratio of 0 for a level with no structures rather than dividing by zero', () => {
+  it('a level with no structures reports zeros, never a division by zero', () => {
     const empty = { id: 'x', match: () => false, total: 0 };
-    expect(levelProgress(empty, entries, { v: 1, cards: {} }, NOW).ratio).toBe(0);
+    expect(levelProgress(empty, entries, { v: 1, cards: {} }, NOW)).toEqual({ studied: 0, mastered: 0, due: 0 });
   });
 });

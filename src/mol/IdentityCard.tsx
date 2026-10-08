@@ -62,7 +62,7 @@ export function IdentityCard({ entry }: { entry: Entry }) {
           <Row label={t('card.size')} value={sizeText(entry.bytes)} />
           {/* Only when a resolution EXISTS and is coarse. An unknown is not a warning. */}
           {fine === false && (
-            <p className="caution">{t('card.lowRes', { r: entry.resolution as number })}</p>
+            <p className="caution">{t('card.lowRes', { r: (entry.resolution as number).toFixed(2) })}</p>
           )}
         </section>
 

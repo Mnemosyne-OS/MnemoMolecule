@@ -1,6 +1,6 @@
 {
   "name": "@mnemosyne-plugins/mnemo-molecule",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "description": "Offline molecular structure explorer wired to Mnemosyne memory. Renders with 3Dmol.js (BSD-3-Clause); structures are PDB (CC0) and ChEBI (CC BY 4.0).",
@@ -29,7 +29,7 @@
     "jsdom": "^29.1.1",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
-    "vitest": "^1.6.1"
+    "vitest": "^3.2.7"
   },
   "repository": {
     "type": "git",

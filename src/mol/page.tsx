@@ -11,7 +11,7 @@
  * of ~283,000 available is a chosen slice, and a library that looks complete
  * and is not makes the person who notices conclude the SEARCH is broken.
  */
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { Component, lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { displayName, familiesOf, loadCorpus, type Corpus, type Entry } from './corpus';
 import { byName, search } from './library';
 import { IdentityCard } from './IdentityCard';
@@ -25,6 +25,18 @@ import { GesturePanel } from '../gestures/GesturePanel';
 // The quiz is a whole second screen and most opens never reach it. Splitting it
 // keeps the first paint to the viewer and the list.
 const ReviewPanel = lazy(() => import('../mnemo/ReviewPanel').then((m) => ({ default: m.ReviewPanel })));
+
+/**
+ * Catches a lazy chunk that fails to load (a dev server restarted, a stale
+ * cache) or a panel that throws. Without it the error climbs to the root and
+ * the whole viewer goes blank for a feature the person may not even use.
+ */
+class PanelBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError(): { failed: boolean } { return { failed: true }; }
+  componentDidCatch(err: unknown): void { console.error('[Molecule] review panel failed:', err); }
+  render(): ReactNode { return this.state.failed ? this.props.fallback : this.props.children; }
+}
 
 type Load =
   | { kind: 'loading' }
@@ -141,7 +153,7 @@ export function Page() {
         <footer className="library-foot">
           <p className="note">{t('lib.count', { n: corpus.structures.length })}</p>
           {/* ✂️ The slice announces itself. */}
-          <p className="note">{t('lib.outOf', { pdb: corpus.outOf.pdb, chebi: corpus.outOf.chebi })}</p>
+          <p className="note">{t('lib.outOf', { pdb: corpus.outOf.pdb.toLocaleString(), chebi: corpus.outOf.chebi.toLocaleString() })}</p>
           <details>
             <summary>{t('src.title')}</summary>
             <ul className="sources">
@@ -250,14 +262,21 @@ export function Page() {
       />
 
       {reviewing && (
-        <Suspense fallback={null}>
-          <ReviewPanel
-            corpus={corpus}
-            onShow={pick}
-            onStudyingChange={setStudying}
-            onClose={() => { setStudying(false); setReviewing(false); }}
-          />
-        </Suspense>
+        <PanelBoundary fallback={
+          <div role="alert" className="review-load-failed">
+            {t('review.loadFailed')}{' '}
+            <button type="button" aria-label={t('review.close')} onClick={() => { setStudying(false); setReviewing(false); }}>×</button>
+          </div>
+        }>
+          <Suspense fallback={null}>
+            <ReviewPanel
+              corpus={corpus}
+              onShow={pick}
+              onStudyingChange={setStudying}
+              onClose={() => { setStudying(false); setReviewing(false); }}
+            />
+          </Suspense>
+        </PanelBoundary>
       )}
     </main>
   );

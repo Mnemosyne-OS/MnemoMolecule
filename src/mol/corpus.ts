@@ -92,13 +92,15 @@ export interface Corpus {
   builtAt: string;
   counts: { pdb: number; chebi: number };
   /** ✂️ What the corpus is a slice OF. The screen says this out loud. */
-  outOf: { pdb: string; chebi: string };
+  /** How many entries each source holds (PDB rounded: « about »). Numbers only, the sentence is in strings.ts. */
+  outOf: { pdb: number; chebi: number };
   sources: { name: string; licence: string; url: string }[];
   structures: Entry[];
 }
 
 export async function loadCorpus(): Promise<Corpus> {
-  const r = await fetch(assetUrl('corpus/index.json'));
+  // Rule 9: a read that never answers ends as an error, never a library « Loading… » forever.
+  const r = await fetch(assetUrl('corpus/index.json'), { signal: AbortSignal.timeout(15_000) });
   if (!r.ok) throw new Error(`the structure catalogue could not be loaded (HTTP ${r.status})`);
   const c = (await r.json()) as Corpus;
   if (!Array.isArray(c?.structures) || !c.structures.length) {
@@ -118,7 +120,8 @@ export async function loadCorpus(): Promise<Corpus> {
  * decodeModelResponse; the check is on the payload, never on the headers.)
  */
 export async function loadStructure(entry: Entry): Promise<Uint8Array> {
-  const r = await fetch(assetUrl(`corpus/${entry.file}`));
+  // The ribosome is 4.4 MB: a generous ceiling, but a ceiling.
+  const r = await fetch(assetUrl(`corpus/${entry.file}`), { signal: AbortSignal.timeout(60_000) });
   if (!r.ok) throw new Error(`${entry.id} could not be loaded (HTTP ${r.status})`);
   const payload = await r.arrayBuffer();
   const sig = new Uint8Array(payload, 0, Math.min(2, payload.byteLength));

@@ -42,6 +42,7 @@ import { Readable } from 'node:stream';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createGunzip } from 'node:zlib';
+import { molblockCharge } from './molblock-charge.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const app = join(here, '..');
@@ -238,7 +239,8 @@ async function readChebi(wanted) {
           name: props['ChEBI NAME'] ?? id,
           formula: props['FORMULA'] ?? null,
           mass: props['MASS'] ? Number(props['MASS']) : null,
-          charge: props['CHARGE'] !== undefined ? Number(props['CHARGE']) : null,
+          // ChEBI omits CHARGE when it is 0: the molblock is the measurement.
+          charge: props['CHARGE'] !== undefined ? Number(props['CHARGE']) : molblockCharge(mol),
           inchikey: props['INCHIKEY'] ?? null,
           smiles: props['SMILES'] ?? null,
           iupac: props['IUPAC_NAME'] ?? null,
@@ -333,7 +335,9 @@ async function main() {
     },
     // ✂️ The screen says this out loud. A library that looks complete and is
     // not makes people conclude the search is broken.
-    outOf: { pdb: 'about 230,000 experimental structures in the PDB', chebi: '52,953 manually curated ChEBI entries' },
+    // Numbers only: the sentence lives in strings.ts, in the reader's language
+    // (an English phrase here was dropped into the French and Spanish screens).
+    outOf: { pdb: 230000, chebi: 52953 },
     sources: [
       { name: 'RCSB PDB', licence: 'CC0 1.0', url: 'https://www.rcsb.org/pages/usage-policy' },
       { name: 'ChEBI (EMBL-EBI)', licence: 'CC BY 4.0', url: 'https://ftp.ebi.ac.uk/pub/databases/chebi/SDF/LICENSE' },

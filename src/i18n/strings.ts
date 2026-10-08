@@ -23,7 +23,7 @@ export const STRINGS = {
 
     'lib.search': 'Search a structure, an id, a formula…',
     'lib.count': '{n} structures in this cartridge',
-    'lib.outOf': 'A chosen slice: {pdb} and {chebi}. The choice and its reasons are in corpus/.',
+    'lib.outOf': 'A chosen slice: about {pdb} experimental structures in the PDB and {chebi} manually curated ChEBI entries. The choice and its reasons are in corpus/.',
     'lib.noMatch': 'Nothing here matches “{q}”.',
     'lib.all': 'All',
     'lib.pdb': 'Experimental structures',
@@ -92,9 +92,11 @@ export const STRINGS = {
     'memory.nothing': 'Your memory holds nothing about {name} yet. That is not a failure — it is what an empty notebook looks like.',
     'memory.outside': 'This page is open outside Mnemosyne, so there is no memory to ask.',
     'memory.failed': 'Your memory did not answer: {why}',
+    'memory.noReason': 'no reason given',
 
     'review.open': 'Quiz me',
     'review.title': 'Review',
+    'review.loadFailed': 'The review panel could not be loaded. Close it and try again.',
     'review.back': 'Back',
     'review.close': 'Close',
     'review.pickLevel': 'What do you want to be asked about?',
@@ -173,7 +175,7 @@ export const STRINGS = {
 
     'lib.search': 'Chercher une structure, un identifiant, une formule…',
     'lib.count': '{n} structures dans cette cartouche',
-    'lib.outOf': 'Une sélection : {pdb} et {chebi}. Le choix et ses raisons sont dans corpus/.',
+    'lib.outOf': 'Une sélection : environ {pdb} structures expérimentales dans la PDB et {chebi} entrées ChEBI vérifiées à la main. Le choix et ses raisons sont dans corpus/.',
     'lib.noMatch': 'Rien ici ne correspond à « {q} ».',
     'lib.all': 'Tout',
     'lib.pdb': 'Structures expérimentales',
@@ -242,9 +244,11 @@ export const STRINGS = {
     'memory.nothing': 'Votre mémoire ne contient encore rien sur {name}. Ce n’est pas une panne : c’est à quoi ressemble un carnet vide.',
     'memory.outside': 'Cette page est ouverte hors de Mnemosyne : il n’y a aucune mémoire à interroger.',
     'memory.failed': 'Votre mémoire n’a pas répondu : {why}',
+    'memory.noReason': 'aucune raison donnée',
 
     'review.open': 'Interroge-moi',
     'review.title': 'Révision',
+    'review.loadFailed': "Le panneau de révision n'a pas pu se charger. Ferme-le et réessaie.",
     'review.back': 'Retour',
     'review.close': 'Fermer',
     'review.pickLevel': 'Sur quoi voulez-vous être interrogé ?',
@@ -323,7 +327,7 @@ export const STRINGS = {
 
     'lib.search': 'Buscar una estructura, un identificador, una fórmula…',
     'lib.count': '{n} estructuras en este cartucho',
-    'lib.outOf': 'Una selección: {pdb} y {chebi}. La elección y sus razones están en corpus/.',
+    'lib.outOf': 'Una selección: unas {pdb} estructuras experimentales en el PDB y {chebi} entradas de ChEBI revisadas a mano. La elección y sus razones están en corpus/.',
     'lib.noMatch': 'Nada aquí coincide con «{q}».',
     'lib.all': 'Todo',
     'lib.pdb': 'Estructuras experimentales',
@@ -392,9 +396,11 @@ export const STRINGS = {
     'memory.nothing': 'Tu memoria todavía no contiene nada sobre {name}. No es un fallo: es el aspecto de un cuaderno vacío.',
     'memory.outside': 'Esta página está abierta fuera de Mnemosyne, así que no hay memoria a la que preguntar.',
     'memory.failed': 'Tu memoria no respondió: {why}',
+    'memory.noReason': 'sin motivo indicado',
 
     'review.open': 'Pregúntame',
     'review.title': 'Repaso',
+    'review.loadFailed': 'No se pudo cargar el panel de repaso. Ciérralo y vuelve a intentarlo.',
     'review.back': 'Volver',
     'review.close': 'Cerrar',
     'review.pickLevel': '¿Sobre qué quieres que te pregunte?',

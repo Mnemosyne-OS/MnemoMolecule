@@ -26,8 +26,31 @@ let queue: Promise<unknown> = Promise.resolve();
 
 /** The whole stored blob. Rejects with the host's reason when it cannot be read. */
 export async function readStore(): Promise<Record<string, unknown>> {
-  const data = await invoke<Record<string, unknown> | null | undefined>('state.get');
-  return data && typeof data === 'object' && !Array.isArray(data) ? data : {};
+  return unwrapState(await invoke<unknown>('state.get'));
+}
+
+const isObject = (x: unknown): x is Record<string, unknown> => !!x && typeof x === 'object' && !Array.isArray(x);
+
+/**
+ * The blob inside what `state.get` answers.
+ *
+ * The host answers `{ state, updatedAt }`, not the blob. Read as if it were
+ * the blob, every write wrapped the previous answer one level deeper, and
+ * the review schedule sat at a depth no read looked at: nothing came back
+ * after a reload. This takes the blob out of the envelope, and drops the
+ * `state` / `updatedAt` pair those writes left inside it: the newest data
+ * sits at the first level, beside the older copies nested below.
+ */
+export function unwrapState(data: unknown): Record<string, unknown> {
+  if (!isObject(data)) return {};
+  const blob = 'state' in data && 'updatedAt' in data ? data.state : data;
+  if (!isObject(blob)) return {};
+  const clean = { ...blob };
+  if ('updatedAt' in clean && (clean.state === null || isObject(clean.state))) {
+    delete clean.state;
+    delete clean.updatedAt;
+  }
+  return clean;
 }
 
 /**

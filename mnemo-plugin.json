@@ -1,7 +1,7 @@
 {
   "name": "@mnemosyne-plugins/mnemo-molecule",
   "displayName": "Molecule",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "category": "Research",
   "vendor": "Mnemosyne Labs",
   "license": "MIT",
@@ -54,8 +54,8 @@
       }
     ]
   },
-  "repository": "https://github.com/Mnemosyne-OS/MnemoMolecule",
   "updateStrategy": "git",
+  "repository": "https://github.com/Mnemosyne-OS/MnemoMolecule",
   "entrypoints": {
     "renderer": "index.html"
   },

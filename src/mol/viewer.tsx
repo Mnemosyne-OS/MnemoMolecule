@@ -40,6 +40,7 @@ import { listenToGestures } from '../gestures/listen';
 import { getSpeeds } from '../gestures/settings';
 import { dragDegrees, zoomFactor } from '../gestures/moves';
 import { SPIN_ACTION } from '../gestures/config';
+import { registerStage } from './stage';
 
 /**
  * How long the load waits for a paint before giving up and drawing anyway.
@@ -80,6 +81,8 @@ export function Viewer({ entry, style, spinning, recentre, onSpinToggle }: Props
     try {
       v = $3Dmol.createViewer(host.current, { backgroundAlpha: 0 });
       viewer.current = v;
+      // The agent door's zoom and turn (doc 149) run on this same instance.
+      registerStage(v);
     } catch (err) {
       // Never swallowed: a blank rectangle with no message is the least
       // informative failure this surface can produce.
@@ -121,6 +124,7 @@ export function Viewer({ entry, style, spinning, recentre, onSpinToggle }: Props
       // and closes exhaust what the browser will grant.
       token.current += 1;
       try { v?.clear(); } catch { /* already gone with the DOM node */ }
+      if (v) registerStage(null, v);
       viewer.current = null;
     };
   }, []);

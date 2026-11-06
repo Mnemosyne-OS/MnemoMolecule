@@ -21,6 +21,7 @@ import { MoleculeMemory } from '../mnemo/MoleculeMemory';
 import { useI18n } from '../i18n/useI18n';
 import type { Key } from '../i18n/strings';
 import { GesturePanel } from '../gestures/GesturePanel';
+import { MoleculeAgentActions } from './MoleculeAgentActions';
 
 // The quiz is a whole second screen and most opens never reach it. Splitting it
 // keeps the first paint to the viewer and the list.
@@ -97,6 +98,13 @@ export function Page() {
 
   return (
     <main className={`shell${studying ? ' studying' : ''}${reviewing ? ' reviewing' : ''}`}>
+      <MoleculeAgentActions
+        corpus={corpus} selected={selected} style={style} spinning={spinning}
+        studying={studying} reviewing={reviewing} query={query} kind={kind} family={family}
+        pick={pick} setStyle={setStyle} setSpinning={setSpinning} recentre={() => setRecentre((n) => n + 1)}
+        setQuery={setQuery} setKind={setKind} setFamily={setFamily}
+        gestOpen={gestOpen} setReviewing={setReviewing} setStudying={setStudying} setGestOpen={setGestOpen}
+      />
       <aside className="library">
         <div className="library-head">
           <input

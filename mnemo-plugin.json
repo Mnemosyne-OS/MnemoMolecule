@@ -1,7 +1,8 @@
 {
   "name": "@mnemosyne-plugins/mnemo-molecule",
   "displayName": "Molecule",
-  "version": "0.2.1",
+  "version": "0.3.0",
+  "icon": "public/favicon.svg",
   "category": "Research",
   "vendor": "Mnemosyne Labs",
   "license": "MIT",
@@ -68,5 +69,265 @@
       "defaultWidth": 1180,
       "defaultHeight": 840
     }
-  ]
+  ],
+  "agentActions": [
+    {
+      "id": "status",
+      "summary": "Read what Molecule shows: the structure on the stage, its representation, spin, and the library filter",
+      "effect": "read"
+    },
+    {
+      "id": "find",
+      "summary": "List structures of the library that match a text, a kind or a family",
+      "details": "Every word of text must appear in a structure's names or identifiers (PDB id, UniProt, ChEBI, InChIKey, formula). Answers the total and at most limit rows, sorted by name.",
+      "effect": "read",
+      "params": {
+        "text": {
+          "type": "string",
+          "description": "Words to look for; empty lists everything",
+          "maxLength": 200
+        },
+        "kind": {
+          "type": "string",
+          "description": "pdb (proteins and other macromolecules) or chebi (small molecules)",
+          "enum": [
+            "pdb",
+            "chebi"
+          ]
+        },
+        "family": {
+          "type": "string",
+          "description": "A family by its id or its name in English, French or Spanish (« médicaments », « sucres »)",
+          "maxLength": 60
+        },
+        "limit": {
+          "type": "number",
+          "description": "How many rows to answer, 1 to 50 (20 by default)",
+          "minimum": 1,
+          "maximum": 50
+        }
+      }
+    },
+    {
+      "id": "show",
+      "summary": "Put a structure on the stage, as a click on its row in the library does",
+      "details": "Takes an id (1A3N, CHEBI:15377) or the name a person says, in English, French or Spanish (« caféine », « eau », « insuline »). A name that matches several structures is refused AMBIGUOUS with their names and ids. Refused while a review run is on, because the stage is its question.",
+      "effect": "write",
+      "params": {
+        "structure": {
+          "type": "string",
+          "description": "The structure's id or its name as the person says it",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "structure"
+      ]
+    },
+    {
+      "id": "setStyle",
+      "summary": "Draw the structure on the stage as cartoon, sticks, spheres or surface",
+      "details": "cartoon is refused for a small molecule: it has no chain of residues to draw as a ribbon.",
+      "effect": "write",
+      "params": {
+        "style": {
+          "type": "string",
+          "description": "The representation",
+          "enum": [
+            "cartoon",
+            "sticks",
+            "spheres",
+            "surface"
+          ]
+        }
+      },
+      "required": [
+        "style"
+      ]
+    },
+    {
+      "id": "spin",
+      "summary": "Start or stop the structure on the stage turning by itself",
+      "effect": "write",
+      "params": {
+        "on": {
+          "type": "boolean",
+          "description": "true to start turning, false to stop"
+        }
+      },
+      "required": [
+        "on"
+      ]
+    },
+    {
+      "id": "resetView",
+      "summary": "Bring the structure on the stage back to its starting angle and size",
+      "effect": "write"
+    },
+    {
+      "id": "filterLibrary",
+      "summary": "Filter the library list the person sees, as the search box and the chips do",
+      "details": "Replaces the whole filter: text, kind and family not given are cleared. family 'all' clears it. Refused while a review run is on.",
+      "effect": "write",
+      "params": {
+        "text": {
+          "type": "string",
+          "description": "Words for the search box",
+          "maxLength": 200
+        },
+        "kind": {
+          "type": "string",
+          "description": "pdb, chebi, or all",
+          "enum": [
+            "pdb",
+            "chebi",
+            "all"
+          ]
+        },
+        "family": {
+          "type": "string",
+          "description": "A family by its id or its name in English, French or Spanish, or all",
+          "maxLength": 60
+        }
+      }
+    },
+    {
+      "id": "zoom",
+      "summary": "Bring the structure on the stage closer or move it away, as a pinch of the hand does",
+      "effect": "write",
+      "params": {
+        "direction": {
+          "type": "string",
+          "description": "in (closer) or out (farther)",
+          "enum": [
+            "in",
+            "out"
+          ]
+        },
+        "times": {
+          "type": "number",
+          "description": "How many steps of 25 %, 1 to 5 (1 by default)",
+          "minimum": 1,
+          "maximum": 5
+        }
+      },
+      "required": [
+        "direction"
+      ]
+    },
+    {
+      "id": "turn",
+      "summary": "Turn the structure on the stage by an angle, as a drag of the hand does",
+      "effect": "write",
+      "params": {
+        "degrees": {
+          "type": "number",
+          "description": "The angle, -360 to 360 (180 shows the other side)",
+          "minimum": -360,
+          "maximum": 360
+        },
+        "axis": {
+          "type": "string",
+          "description": "y turns it sideways (default), x tips it forward",
+          "enum": [
+            "y",
+            "x"
+          ]
+        }
+      },
+      "required": [
+        "degrees"
+      ]
+    },
+    {
+      "id": "showRandom",
+      "summary": "Put a structure picked at random on the stage, optionally of one kind or family",
+      "details": "Never the one already shown. Refused while a review run is on.",
+      "effect": "write",
+      "params": {
+        "kind": {
+          "type": "string",
+          "description": "pdb (proteins and other macromolecules) or chebi (small molecules)",
+          "enum": [
+            "pdb",
+            "chebi"
+          ]
+        },
+        "family": {
+          "type": "string",
+          "description": "A family by its id or its name in English, French or Spanish",
+          "maxLength": 60
+        }
+      }
+    },
+    {
+      "id": "showPanel",
+      "summary": "Open the review quiz or the hand gestures panel, as their buttons do",
+      "effect": "write",
+      "params": {
+        "panel": {
+          "type": "string",
+          "description": "review (the quiz that hides a name and asks it) or gestures",
+          "enum": [
+            "review",
+            "gestures"
+          ]
+        }
+      },
+      "required": [
+        "panel"
+      ]
+    },
+    {
+      "id": "closePanel",
+      "summary": "Close the review quiz or the gestures panel, as their close buttons do",
+      "details": "Without panel, closes whichever is open. Closing the review ends a run on screen; answers already given stay saved.",
+      "effect": "write",
+      "params": {
+        "panel": {
+          "type": "string",
+          "description": "review or gestures",
+          "enum": [
+            "review",
+            "gestures"
+          ]
+        }
+      }
+    }
+  ],
+  "agentGuide": [
+    "Name a structure the way the person says it, in English, French or Spanish (« caféine », « hémoglobine », « eau »): show finds it by its words, and an id still works. Several matches are refused AMBIGUOUS with their names and ids: pick one and call show again with the id.",
+    "To look at a structure: show (or showRandom), then setStyle, spin, zoom, turn, resetView to move it on the stage.",
+    "A family (« les médicaments », « les sucres ») filters the list with filterLibrary, or picks with showRandom.",
+    "« Interroge-moi » / « quiz me »: showPanel review. closePanel closes it. While a review run is on, show and filterLibrary are refused: the stage is the question."
+  ],
+  "voiceCommands": {
+    "fr": [
+      "montre la caféine",
+      "affiche l’insuline en bâtonnets",
+      "fais-la tourner",
+      "zoome sur la molécule",
+      "montre-moi un sucre au hasard",
+      "interroge-moi",
+      "remets la vue à zéro"
+    ],
+    "en": [
+      "show caffeine",
+      "show insulin as sticks",
+      "make it spin",
+      "zoom in on the molecule",
+      "show me a random sugar",
+      "quiz me",
+      "reset the view"
+    ],
+    "es": [
+      "muestra la cafeína",
+      "muestra la insulina en barras",
+      "hazla girar",
+      "haz zoom en la molécula",
+      "muéstrame un azúcar al azar",
+      "hazme un quiz",
+      "restablece la vista"
+    ]
+  }
 }
